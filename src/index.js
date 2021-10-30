@@ -44,15 +44,31 @@ app.post('/users', (request, response) => {
       todos: []
     }
   )
+  
+  return response.json(users);
+
   return response.status(201).send();
 });
 
 app.get('/todos', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  const { username } = request.headers;
+
+  return response.json(users.todos);
 });
 
 app.post('/todos', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+ const { title, deadline } = request.body;
+ const { username } = request.headers;
+
+ users.username.todos.push( {
+  id: uuidv4(),
+	title,
+	done: false, 
+	deadline: new Date(deadline), 
+	created_at: new Date()
+  }
+);
+
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
